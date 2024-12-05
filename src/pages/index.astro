@@ -1,5 +1,32 @@
 ---
+import { load } from 'cheerio';
 
+interface NewsItem {
+	title: string;
+	href: string;
+}
+
+let newsItems: NewsItem[] = [];
+const baseUrl = "https://www.radiotavisupleba.ge";
+
+try {
+	const response = await fetch(`${baseUrl}/news`);
+	const data = await response.text();
+	const $ = load(data);
+
+	$('.media-block__title').each((_, el) => {
+		const $el = $(el);
+		const href = $el.closest('a').attr('href') || '#';
+		const fullHref = href.startsWith('http') ? href : `${baseUrl}${href}`;
+
+		newsItems.push({
+			title: $el.text().trim(),
+			href: fullHref
+		});
+	});
+} catch (error) {
+	console.error("Error fetching data:", error);
+}
 ---
 
 <html lang="en">
@@ -7,10 +34,17 @@
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
+		<meta name="generator" content={Astro.generator}	 />
 		<title>Astro</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+	<h1>Astro</h1>
+		{newsItems.map((item) => (
+			<div>
+				<a href={item.href} target="_blank" rel="noopener noreferrer">
+					{item.title}
+				</a>
+			</div>
+		))}
 	</body>
 </html>
