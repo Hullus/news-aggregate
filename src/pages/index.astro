@@ -6,7 +6,6 @@ let data = {};
 try {
 	const response = await fetch(baseUrl);
 	data = await response.json();
-	console.log(data)
 } catch (error) {
 	console.error("Error fetching data:", error);
 }
@@ -20,38 +19,64 @@ try {
 		<meta name="generator" content={Astro.generator}	 />
 		<title>Astro</title>
 	</head>
-	<body >
-	<h1>რადიო თავისუფლება</h1>
-		{data.radioFreedom.map((item) => (
-			<div>
-				<a href={item.url} target="_blank" rel="noopener noreferrer">
-					{item.title}
-				</a>
-			</div>
-		))}
-	<h1>ნეტ გაზეთი</h1>
-	{data.netgazeti.map((item) => (
-		<div>
-			<a href={item.url} target="_blank" rel="noopener noreferrer">
-				{item.title}
-			</a>
+	<body>
+		<div class:list="article-container">
+			<h1>რადიო თავისუფლება</h1>
+			{data.radioFreedom.map((item) => (
+				<div >
+					<a href={item.url} target="_blank" rel="noopener noreferrer">
+						{item.title}
+					</a>
+				</div>
+			))}
 		</div>
-	))}
-	<h1>ფორმულა</h1>
-	{data.formula.map((item) => (
-		<div>
-			<a href={item.url} target="_blank" rel="noopener noreferrer">
-				{item.title}
-			</a>
+		<div class:list="article-container">
+			<h1>ნეტ გაზეთი</h1>
+			{data.netgazeti.map((item) => (
+				<div>
+					<a href={item.url} target="_blank" rel="noopener noreferrer">
+						{item.title}
+					</a>
+				</div>
+			))}
+
 		</div>
-	))}
-	<h1>სიმართლე</h1>
-	{data.imedi.map((item) => (
-		<div>
-			<a href={item.url} target="_blank" rel="noopener noreferrer">
-				{item.title}
-			</a>
+		<div class:list="article-container">
+			<h1>ფორმულა</h1>
+			{data.formula.map((item) => (
+				<div>
+					<a href={item.url} target="_blank" rel="noopener noreferrer">
+						{item.title}
+					</a>
+				</div>
+			))}
+
 		</div>
-	))}
+		<div class:list="article-container">
+			<h1>სიმართლე</h1>
+			{data.imedi.map((item) => (
+				<div>
+					<a href={item.url} target="_blank" rel="noopener noreferrer">
+						{item.title}
+					</a>
+				</div>
+			))}
+		</div>
 	</body>
 </html>
+
+
+<style>
+	body{
+		display: flex;
+	}
+	.article-container{
+		display: flex;
+		flex-direction: column;
+	}
+	.article-container{
+		font-family: 'BPG Arial', sans-serif;
+		line-height: 1.6;
+		margin-bottom: 20px;
+	}
+</style>
