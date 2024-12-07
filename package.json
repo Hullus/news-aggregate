@@ -9,7 +9,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.0.2",
-    "cheerio": "^1.0.0"
+    "astro": "^5.0.2"
   }
 }
