@@ -1,5 +1,5 @@
 ---
-const baseUrl = "http://localhost:8080/news";
+const baseUrl = import.meta.env.URL;
 let data = {
 	radioFreedom: [],
 	netgazeti: [],
@@ -7,17 +7,21 @@ let data = {
 	imedi: []
 };
 
-try {
-	const response = await fetch(baseUrl);
-	console.log('Fetch Response Status:', response.status);
-	console.log('Fetch Response Status Text:', response.statusText);
+const getData =  async () => {
+	try {
+		const response = await fetch(baseUrl);
+		console.log('Fetch Response Status:', response.status);
+		console.log('Fetch Response Status Text:', response.statusText);
 
-	const responseText = await response.text();
+		const responseText = await response.text();
 
-	data = JSON.parse(responseText);
-} catch (error) {
-	console.error("Error fetching or parsing data:", error);
+		data = JSON.parse(responseText);
+	} catch (error) {
+		console.error("Error fetching or parsing data:", error);
+	}
 }
+
+await getData()
 ---
 <html lang="en">
 	<head>
@@ -152,3 +156,4 @@ try {
 		color: #28ea2c;
 	}
 </style>
+
